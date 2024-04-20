@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SideBar from "@/components/sideBar/sideBar";
 import DraggableLayer from "@/components/draggableLayer/draggableLayer";
@@ -32,10 +32,23 @@ export default function Home() {
 
   const [isOpen, setIsOpen] = useState(true);
   const [droppedLayers, setDroppedLayers] = useState<Layer[]>([]);
+  const [islayers, setIslayers] = useState<boolean>(false);
+  const [generatedCode, setGeneratedCode] = useState<string>("");
   const handleDelete = (index: number) => {
     const newLayers = droppedLayers.filter((_, i) => i !== index);
     setDroppedLayers(newLayers);
   }
+  
+  useEffect(() => {
+  if (droppedLayers.length > 0) {
+    let code = "import tensorflow as tf\n\nmodel = tf.keras.Sequential([\n";
+    droppedLayers.forEach((layer, index) => {
+    code += `    tf.keras.layers.${layer.name}(),\n`;
+    });
+    code += "])";
+    setGeneratedCode(code);
+  }
+    }, [droppedLayers]);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -43,9 +56,22 @@ export default function Home() {
     setDroppedLayers([...droppedLayers, { name: layerName }]);
   };
 
+  useEffect(() => {
+    if (droppedLayers.length > 0) {
+      setIslayers(true);
+    } else {
+      setIslayers(false);
+    }
+  }, [droppedLayers])
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+
+  const handleGenerate = () => {
+    console.log(generatedCode);
+      };
+
 
   return (
     <main className="flex h-auto flex-row transition duration-300 overflow-hidden">
@@ -59,7 +85,7 @@ export default function Home() {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
+        <NavBar isOpen={isOpen} setIsOpen={setIsOpen} showGenerate={islayers} />
         <div className="overflow-y-scroll h-full">
           {droppedLayers.length > 0 ? (
             <div className="flex flex-col items-center gap-5 mt-10">
