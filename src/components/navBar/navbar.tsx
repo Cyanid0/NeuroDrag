@@ -1,25 +1,37 @@
-import MenuIcon from './dependencies/menuIcon';
-
+import MenuIcon from "./dependencies/menuIcon";
+import { Node, Edge } from "react-flow-renderer";
+import Transpiler from "../transpiler/Transpiler";
 type navBarProp = {
-  isOpen: boolean,
-  setIsOpen: (x: boolean) => void,
-  showGenerate: boolean,
-  handleGenerate: () => void,
-}
-function NavBar({ isOpen, setIsOpen, showGenerate, handleGenerate }: navBarProp) {
-
+  isOpen: boolean;
+  setIsOpen: (x: boolean) => void;
+  showGenerate: boolean;
+  Nodes: Node[];
+  isModalOpen: boolean;
+  Edges: Edge[];
+  setIsModalOpen: (x: boolean) => void;
+};
+function NavBar({
+  isOpen,
+  setIsOpen,
+  showGenerate,
+  Nodes,
+  Edges,
+  isModalOpen,
+  setIsModalOpen,
+}: navBarProp) {
   return (
-    <div className="flex sticky top-0 border-black border-b-2 items-center justify-between bg-white w-[100%] h-20">
+    <div className="flex border-black border-b-2 items-center justify-between bg-white w-[100%] h-20">
       <MenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
-      {showGenerate &&
-        <div className="flex items-center justify-center w-[13%] h-[80%] text-md text-black border-black rounded-lg border-md border-2 mr-2 hover:text-white hover:bg-black hover:cursor-pointer transition-all duration-200"
-          onClick={handleGenerate}
-        > Generate Code </div>
-
-      }
+      {showGenerate && (
+        <Transpiler
+          nodes={Nodes}
+          edges={Edges}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 }
 
 export default NavBar;
-
