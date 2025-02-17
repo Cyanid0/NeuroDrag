@@ -40,6 +40,16 @@ const Transpiler: React.FC<TranspilerProps> = ({
           return `model.add(tf.keras.layers.Conv2D(filters=..., kernel_size=(3, 3), activation='relu'))\n`;
         case "pooling":
           return `model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2)))\n`;
+        case "flatten":
+          return `model.add(tf.keras.layers.Flatten())\n`;
+        case "dropout":
+          return `model.add(tf.keras.layers.Dropout(rate=0.2))\n`;
+        case "output":
+          return `model.add(tf.keras.layers.Dense(units=..., activation='softmax'))\n`;
+        case "batchnormalization":
+          return `model.add(tf.keras.layers.BatchNormalization())\n`;
+        case "activation":
+          return `model.add(tf.keras.layers.Activation('relu'))\n`;
         default:
           return "";
       }
@@ -74,7 +84,7 @@ const Transpiler: React.FC<TranspilerProps> = ({
     <div>
       <button
         onClick={handleGenerateClick}
-        className="border-black border-2 mr-2 hover:bg-black hover:text-white transition-all duration-500 text-black px-3 py-1 rounded"
+        className="border-black border-2 mr-2 hover:bg-black hover:text-white transition-all duration-500 text-black px-3 py-3 rounded"
       >
         Generate Code
       </button>

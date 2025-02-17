@@ -1,6 +1,5 @@
 // pages/index.tsx
 import NeuroDragClient from "@/components/neuroDragClient/neuroDragClient";
-import { ReactFlowProvider } from "reactflow";
 
 const MainPage: React.FC = () => {
   return (

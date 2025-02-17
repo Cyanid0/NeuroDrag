@@ -111,6 +111,11 @@ const MainPage: React.FC = () => {
             <DraggableLayer layerType="Dense" onDragStart={onDragStart} />
             <DraggableLayer layerType="Conv" onDragStart={onDragStart} />
             <DraggableLayer layerType="Pooling" onDragStart={onDragStart} />
+            <DraggableLayer layerType="Flatten" onDragStart={onDragStart} />
+            <DraggableLayer layerType="Dropout" onDragStart={onDragStart} />
+            <DraggableLayer layerType="BatchNormalization" onDragStart={onDragStart} />
+            <DraggableLayer layerType="Activation" onDragStart={onDragStart} />
+            <DraggableLayer layerType="Output" onDragStart={onDragStart} />
           </SideBar>
           <div
             className="w-full h-full relative"
